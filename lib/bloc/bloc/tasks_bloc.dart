@@ -34,5 +34,8 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     emit(TasksState(tasks: tasks));
   }
 
-  FutureOr<void> _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) {}
+  FutureOr<void> _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) {
+    final state = this.state;
+    emit(TasksState(tasks: List.from(state.tasks)..remove(event.task)));
+  }
 }
