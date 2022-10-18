@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tasks_app/models/task.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'bloc/bloc_exports.dart';
 import 'screens/tasks_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  BlocOverrides.runZoned(
+
+  final storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory());
+
+  HydratedBlocOverrides.runZoned(
     () => runApp(const MyApp()),
+    storage: storage,
   );
 }
 
@@ -18,8 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          TasksBloc()..add(AddTask(task: Task(title: "Task1"))),
+      create: (context) => TasksBloc(),
       child: MaterialApp(
         title: 'Flutter Tasks App',
         theme: ThemeData(

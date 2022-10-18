@@ -31,7 +31,7 @@ class _TasksScreenState extends State<TasksScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
-        List<Task> tasks = state.tasks;
+        List<Task> tasks = state.allTasks;
         return Scaffold(
           appBar: AppBar(
             title: const Text('Tasks App'),
