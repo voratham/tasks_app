@@ -1,72 +1,71 @@
 import 'package:flutter/material.dart';
 
+import '../bloc/bloc_exports.dart';
 import '../models/task.dart';
+import '../widgets/tasks_list.dart';
+import 'add_task_screen.dart';
 
-class TasksScreen extends StatelessWidget {
-  TasksScreen({Key? key}) : super(key: key);
+class TasksScreen extends StatefulWidget {
+  const TasksScreen({Key? key}) : super(key: key);
 
-  List<Task> tasks = [
-    Task(title: "Task1"),
-    Task(title: "Task2"),
-    Task(title: "Task3"),
-  ];
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  void _addTask(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: ((context) {
+          return SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: const AddTaskScreen(),
+            ),
+          );
+        }));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tasks App'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add),
-          )
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Center(
-            child: Chip(
-              label: Text(
-                'Tasks:',
-              ),
-            ),
+    return BlocBuilder<TasksBloc, TasksState>(
+      builder: (context, state) {
+        List<Task> tasks = state.tasks;
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Tasks App'),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  _addTask(context);
+                },
+                icon: const Icon(Icons.add),
+              )
+            ],
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: tasks.length,
-              itemBuilder: (context, index) {
-                var task = tasks[index];
-                return ListTile(
-                  title: Text(task.title),
-                  trailing: Checkbox(
-                    value: task.isDone,
-                    onChanged: (value) {},
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Center(
+                child: Chip(
+                  label: Text(
+                    'Tasks:',
                   ),
-                );
-              },
-            ),
-          )
-          // ListView.builder(
-          //     itemCount: tasks.length,
-          //     itemBuilder: ((context, index) {
-          //       var task = tasks[index];
-          //       return ListTile(
-          //         title: Text(task.title),
-          //         trailing: Checkbox(
-          //           value: task.isDone,
-          //           onChanged: (value) {},
-          //         ),
-          //       );
-          //     })),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Add Task',
-        child: const Icon(Icons.add),
-      ),
+                ),
+              ),
+              TasksList(tasks: tasks)
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              _addTask(context);
+            },
+            tooltip: 'Add Task',
+            child: const Icon(Icons.add),
+          ),
+        );
+      },
     );
   }
 }
