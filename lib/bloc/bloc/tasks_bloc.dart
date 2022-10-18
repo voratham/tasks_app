@@ -22,7 +22,17 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     ));
   }
 
-  FutureOr<void> _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) {}
+  FutureOr<void> _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) {
+    final state = this.state;
+    final task = event.task;
+    final int index = state.tasks.indexOf(task);
+    List<Task> tasks = List.from(state.tasks)..remove(task);
+    task.isDone == false
+        ? tasks.insert(index, task.copyWith(isDone: true))
+        : tasks.insert(index, task.copyWith(isDone: false));
+
+    emit(TasksState(tasks: tasks));
+  }
 
   FutureOr<void> _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) {}
 }
