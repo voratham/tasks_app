@@ -25,7 +25,8 @@ class MyDrawer extends StatelessWidget {
           BlocBuilder<TasksBloc, TasksState>(
             builder: (context, state) {
               return GestureDetector(
-                onTap: () => Navigator.of(context).pushNamed(TasksScreen.id),
+                onTap: () =>
+                    Navigator.of(context).pushReplacementNamed(TasksScreen.id),
                 child: ListTile(
                   leading: const Icon(Icons.folder_special),
                   title: const Text('My Tasks'),
@@ -38,13 +39,32 @@ class MyDrawer extends StatelessWidget {
           BlocBuilder<TasksBloc, TasksState>(
             builder: (context, state) {
               return GestureDetector(
-                onTap: () => Navigator.of(context).pushNamed(RecycleBin.id),
+                onTap: () =>
+                    Navigator.of(context).pushReplacementNamed(RecycleBin.id),
                 child: ListTile(
                   leading: const Icon(Icons.delete),
                   title: const Text('Bin'),
                   trailing: Text('${state.removedTasks.length}'),
                 ),
               );
+            },
+          ),
+          BlocBuilder<SwitchBloc, SwitchState>(
+            builder: (context, state) {
+              print('state :: ${state.switchValue}');
+              return Switch(
+                  value: state.switchValue,
+                  onChanged: ((newValue) {
+                    print(newValue);
+                    if (newValue) {
+                      context.read<SwitchBloc>().add(SwitchOnEvent());
+                    } else {
+                      context.read<SwitchBloc>().add(SwitchOffEvent());
+                    }
+                    // newValue
+                    //     ? context.read<SwitchBloc>().add(SwitchOnEvent())
+                    //     : context.read<SwitchBloc>().add(SwitchOffEvent());
+                  }));
             },
           )
         ],
