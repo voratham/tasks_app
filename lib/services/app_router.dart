@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tasks_app/screens/recycle_bin.dart';
-import 'package:flutter_tasks_app/screens/tasks_screen.dart';
+
+import '../screens/recycle_bin.dart';
+import '../screens/tabs_screen.dart';
 
 class AppRouter {
   Route? onGenerateRoute(RouteSettings routeSettings) {
@@ -9,9 +10,9 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) {
           return const RecycleBin();
         });
-      case TasksScreen.id:
+      case TabsScreen.id:
         return MaterialPageRoute(builder: (context) {
-          return const TasksScreen();
+          return TabsScreen();
         });
       default:
         return null;
