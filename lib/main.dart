@@ -11,7 +11,6 @@ void main() async {
 
   final storage = await HydratedStorage.build(
       storageDirectory: await getApplicationDocumentsDirectory());
-
   HydratedBlocOverrides.runZoned(
     () => runApp(MyApp(
       appRouter: AppRouter(),

@@ -26,6 +26,7 @@ class _TabsScreenState extends State<TabsScreen> {
   void _addTask(BuildContext context) {
     showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: ((context) {
           return SingleChildScrollView(
             child: Container(
