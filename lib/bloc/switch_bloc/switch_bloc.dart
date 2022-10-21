@@ -1,6 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_tasks_app/bloc/bloc_exports.dart';
+import '../bloc_exports.dart';
 
 part 'switch_event.dart';
 part 'switch_state.dart';
