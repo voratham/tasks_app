@@ -4,4 +4,4 @@
 - hydrated_bloc
 
 ## Screenshots
-<img src="./screenshot/screenshot.gif" width="300px" height="300px" />
+<img src="./screenshot/screenshot.gif" width="300px" height="500px" />
